@@ -1,0 +1,33 @@
+final PageController controllerA = PageController();
+final PageController controllerB = PageController();
+
+Widget build(BuildContext context) {
+  return Scaffold(
+   body: SafeArea(
+    child: Column(
+     children: [
+      Flexible(
+       flex: 2,
+       child: PageView.builder(
+        controller: controllerA,
+        onPageChanged: (value) {
+         controllerB.jumpTo(controllerA.offset); // pay attention to this section
+        },
+        itemBuilder: (_, index) => Container(...),
+       ),
+      ),
+     Flexible(
+      flex: 1,
+      child: PageView.builder(
+       controller: controllerB,
+       onPageChanged: (value) {
+        controllerA.jumpTo(controllerB.offset); // pay attention to this section
+       },
+       itemBuilder: (_, index) => Container(...),
+      ),
+     )
+    ],
+   ),
+  ),
+ );
+}
